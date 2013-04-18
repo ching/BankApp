@@ -1,0 +1,35 @@
+
+body{ /*Styles the body of the page*/
+	background-color: #FFFFFF;
+	font-family: 'Cambria';
+}
+#wrapper { /*Styles the body box of the page*/
+	background-color: #FFCC99; 
+    width: 80%;
+	margin: auto;
+    min-width:850px;
+} 
+#header { /*Styles the header of the page*/
+	background-color: #FFFFFF;
+	text-align: left;
+	overflow: hidden;
+}
+#leftcolm { /*Styles the left column of the page*/
+	float: left;
+	width: 19%;
+	height: 100%;
+	padding: 5px;
+} 
+#rightcolm { /*Styles the right column of the page*/
+	margin-left: 21%;
+    background-color: #996666;
+	height: 100%;
+	padding: 20px;
+} 
+#footer{ /*Styles the footer of the page*/
+	background-color: #000000;
+	text-align: center;
+}
+.clearfloat{ /*Clears the floating*/
+	clear:both;
+}

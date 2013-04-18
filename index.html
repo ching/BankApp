@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<TITLE>My Bank Account</TITLE>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<SCRIPT type="text/javascript"> /*Inline JS code begins here*/
+	function bank(accountNumber, owner, balance){
+		this.accountNumber = accountNumber;
+		this.owner = owner;
+		this.balance = balance;
+		this.deposit = deposit;	//method to deposit
+		this.withdraw = withdraw; //method to withdraw
+	}//creating a new bank object with its properties and methods
+	function checkName(){
+		var myName = document.getElementById("name");
+		if ( myName.value.search(/^[A-Z][a-z]+, ?[A-Z][a-z]+, ?[A-Z]\.?$/) !=0){
+			alert("The name you entered (" + myName.value + 
+                	") is not in the correct form. \n" +
+                	"The correct form is: " +
+                	"last-name, first-name, middle-initial. " +
+					"Please go back and fix your name!");
+			document.getElementById("name").value = "";
+		}//alert user to re-enter name when not in correct format
+	}//checkName method
+	function checkAcc(){
+		var myAccNum = document.getElementById("accnum");
+		if (myAccNum.value.search(/^\d{3}$/) !=0){
+			alert("The account number you entered (" + myAccNum.value +
+					") is not in the correct form of 3 digits. " +
+					"Please go back and fix your account number!");
+			document.getElementById("accnum").value = "";
+		}//alert user to re-enter account number when not in correct format
+	}//checkAcc method
+	function checkAmt(){
+		var myIntAmt = document.getElementById("amount");
+		if (myIntAmt.value.search(/^\d{1,}$/) !=0){
+			alert("The initial deposit you entered (" + myIntAmt.value +
+					") is not in the correct form of a digit. " +
+					"Please go back and fix your initial deposit amount!");
+			document.getElementById("amount").value = "";
+		}//alert user to re-enter initial deposit when not in correct format
+	}//checkAmt method
+	function clearFlags(){
+		document.getElementById("nameFlag").innerHTML = "";
+		document.getElementById("accFlag").innerHTML = "";
+		document.getElementById("amtFlag").innerHTML = "";
+		document.getElementById("message").innerHTML = "";
+	}//clearFlags method
+	function clearData(){
+		document.getElementById("name").value = "";
+		document.getElementById("accnum").value = "";
+		document.getElementById("amount").value = "";
+	}//clearData method
+	function createAcc() {
+		var missingData = false;
+		var intAmt = document.getElementById("amount").value;
+		if (document.getElementById("name").value.length == 0) {
+			document.getElementById("nameFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when name is missing
+		if (document.getElementById("accnum").value.length == 0) {
+			document.getElementById("accFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when account number is missing
+		if (document.getElementById("amount").value.length == 0) {
+			document.getElementById("amtFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when initial deposit is missing
+		if (missingData) {
+     		document.getElementById("message").innerHTML = "* You must fill out " +
+			"the information above before creating an account.";
+     	}//when any of the required fields is missing
+		else {
+			document.getElementById("balance").value =  intAmt;
+			clearData();
+			clearFlags();
+		}//when all information is provided
+	}//creatAcc method
+	function deposit(){ 
+		var missingData = false;
+		var depositAmt = document.getElementById("amount").value;
+		var intAmt = document.getElementById("balance").value;
+		document.getElementById("nameFlag").innerHTML = "";
+		if (document.getElementById("accnum").value.length == 0) {
+			document.getElementById("accFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when account number is missing
+		if (document.getElementById("amount").value.length == 0) {
+			document.getElementById("amtFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when initial deposit is missing
+		if (missingData) {
+     		document.getElementById("message").innerHTML = "* You must fill out " +
+			"the information above before making a deposit.";
+     	}//when any of the required fields is missing
+		else {
+			balance = Number(intAmt) + Number(depositAmt);
+			document.getElementById("balance").value =  balance;
+			clearData();
+			clearFlags();
+		}//when all information is provided
+	}//deposit method
+	function withdraw(){ 
+		var missingData = false;
+		var depositAmt = document.getElementById("amount").value;
+		var intAmt = document.getElementById("balance").value;
+		document.getElementById("nameFlag").innerHTML = "";
+		if (document.getElementById("accnum").value.length == 0) {
+			document.getElementById("accFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when account number is missing
+		if (document.getElementById("amount").value.length == 0) {
+			document.getElementById("amtFlag").innerHTML = "*";
+     		missingData = true;
+   		}//when initial deposit is missing
+		if (missingData) {
+     		document.getElementById("message").innerHTML = "* You must fill out " +
+			"the information above before making a withdrawal.";
+     	}//when any of the required fields is missing
+		else {
+			balance = Number(intAmt) - Number(depositAmt);
+			document.getElementById("balance").value =  balance;
+			clearData();
+			clearFlags();
+		}//when all information is provided
+	}//withdraw method
+</SCRIPT>
+</HEAD>
+<BODY> 
+<DIV ID="wrapper">
+	<DIV ID="header">
+		<H1>My Bank</H1>
+	</DIV>
+	<DIV ID="leftcolm">
+		<H3>The area is for output</H3>
+		<FORM ID="text">
+			<LABEL>Your Current Balance Is:</LABEL><BR>
+            &nbsp;&nbsp;&nbsp;
+            <TEXTAREA id="balance" rows="2" cols="15"></TEXTAREA>
+		</FORM>
+	</DIV>
+	<DIV ID="rightcolm">
+		<H3>User Information</H3>
+        <P>Enter the information before asking the bank to do a transaction
+        <FORM>
+        	<INPUT type="text" id="name" onchange="checkName();"/>&nbsp;&nbsp;
+            <SPAN id="nameFlag"> </SPAN><LABEL>Name (last name, first name, middle initial.)</LABEL>
+            <P><INPUT type="text" id="accnum" onchange="checkAcc();"/>&nbsp;&nbsp;
+            <SPAN id="accFlag"> </SPAN><LABEL>Account Number (3 numerical digits)</LABEL>
+            <P><INPUT type="text" id="amount" onchange="checkAmt();"/>&nbsp;&nbsp;
+            <SPAN id="amtFlag"> </SPAN><LABEL>$$ Amount (initial balance, amount deposit or 
+           	withdraw)(must be a number)</LABEL>
+			<P><SPAN id="message"> </SPAN>
+        </FORM>
+	</DIV>
+    <DIV CLASS = "clearfloat"></DIV>
+	<DIV ID="footer">
+    	<FORM>
+			<input type="button" onclick="createAcc();" value="Create Account">
+			<input type="button" onclick="deposit();" value="Deposit Money"> 
+			<input type="button" onclick="withdraw();" value="Withdraw Money">
+        </FORM>
+	</DIV>
+</DIV>
+</BODY>
+</HTML>
